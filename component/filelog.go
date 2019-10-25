@@ -1,8 +1,8 @@
 package component
 
 import (
-	"aiks/container"
-	"aiks/utils"
+	"github.com/aiqiu506/aiks/container"
+	"github.com/aiqiu506/aiks/utils"
 	"log"
 	"os"
 	"time"

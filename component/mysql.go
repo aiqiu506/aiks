@@ -1,9 +1,9 @@
 package component
 
 import (
-	"aiks/container"
-	"aiks/utils"
 	"fmt"
+	"github.com/aiqiu506/aiks/container"
+	"github.com/aiqiu506/aiks/utils"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	"log"

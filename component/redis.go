@@ -1,8 +1,8 @@
 package component
 
 import (
-	"aiks/container"
-	"aiks/utils"
+	"github.com/aiqiu506/aiks/container"
+	"github.com/aiqiu506/aiks/utils"
 	"github.com/go-redis/redis"
 	"log"
 )
@@ -35,7 +35,7 @@ func (r *redisStruct) Init(config interface{}) {
 	r.DB = RedisConnect(redisParams)
 }
 
-func RedisConnect(r * RedisParams) *redis.Client {
+func RedisConnect(r *RedisParams) *redis.Client {
 	redis := redis.NewClient(&redis.Options{
 		Addr:     r.Host + ":" + r.Port,
 		Password: r.Auth, // no password set

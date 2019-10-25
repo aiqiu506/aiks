@@ -1,7 +1,7 @@
 package component
 
 import (
-	"aiks/container"
+	"github.com/aiqiu506/aiks/container"
 	"log"
 )
 

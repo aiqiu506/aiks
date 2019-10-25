@@ -1,11 +1,11 @@
 package component
 
 import (
-	"aiks/container"
-	"aiks/utils"
 	"errors"
 	"github.com/DeanThompson/jpush-api-go-client"
 	"github.com/DeanThompson/jpush-api-go-client/push"
+	"github.com/aiqiu506/aiks/container"
+	"github.com/aiqiu506/aiks/utils"
 	"log"
 )
 
@@ -17,7 +17,7 @@ type JpushParams struct {
 
 type jpushStruct struct {
 	Client *jpush.JPushClient
-	Env  string
+	Env    string
 }
 
 var JPush jpushStruct
@@ -44,12 +44,12 @@ func CreateClient(config *JpushParams) *jpush.JPushClient {
 }
 
 type JPushData struct {
-	To       string `json:"to"`
-	Platform string `json:"platform"`
-	Title    string `json:"title"`
-	Name     string `json:"name"`
-	Content  string `json:"content"`
-	Extras  map[string]interface{} `json:"extras"`
+	To       string                 `json:"to"`
+	Platform string                 `json:"platform"`
+	Title    string                 `json:"title"`
+	Name     string                 `json:"name"`
+	Content  string                 `json:"content"`
+	Extras   map[string]interface{} `json:"extras"`
 }
 
 func setPlatform(platform *push.Platform, plat string) error {
@@ -122,11 +122,11 @@ func (j *jpushStruct) Push(data JPushData) (bool, error) {
 	// 区别在于，PushValidate 只会验证推送调用成功，不会向用户发送任何消息
 	//result, err := client.PushValidate(payload)
 	if err != nil {
-		return false,err
+		return false, err
 	}
 	if result.StatusCode != 200 {
 
-		return false,errors.New(result.Error.Message)
+		return false, errors.New(result.Error.Message)
 	}
-	return true,nil
+	return true, nil
 }

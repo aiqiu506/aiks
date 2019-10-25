@@ -1,9 +1,9 @@
 package component
 
 import (
-	"aiks/container"
-	"aiks/utils"
 	"fmt"
+	"github.com/aiqiu506/aiks/container"
+	"github.com/aiqiu506/aiks/utils"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"log"
@@ -43,10 +43,10 @@ func (m *mongoStruct) Init(config interface{}) {
 func MongoConnect(mongoConfig *MongoParams) (*mgo.Database, *mgo.Session) {
 	//mongo连接格式串  mongodb://user:pass@host1:port1
 	var conStr string
-	if mongoConfig.User!=""{
-		conStr=fmt.Sprintf("mongodb://%s:%s@%s:%s",mongoConfig.User,mongoConfig.Pwd,mongoConfig.Host,mongoConfig.Port)
-	}else{
-		conStr=fmt.Sprintf("%s:%s", mongoConfig.Host, mongoConfig.Port)
+	if mongoConfig.User != "" {
+		conStr = fmt.Sprintf("mongodb://%s:%s@%s:%s", mongoConfig.User, mongoConfig.Pwd, mongoConfig.Host, mongoConfig.Port)
+	} else {
+		conStr = fmt.Sprintf("%s:%s", mongoConfig.Host, mongoConfig.Port)
 	}
 
 	mongoSession, err := mgo.Dial(conStr)
