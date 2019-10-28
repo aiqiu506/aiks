@@ -80,74 +80,86 @@ func (c *ConfigEngine) GetString(name string) string {
 }
 
 // 从配置文件中获取int类型的值
-func (c *ConfigEngine) GetInt(name string) int {
+func (c *ConfigEngine) GetInt(name string) (int,error) {
 	value := c.Get(name)
+	if value==nil{
+		return 0,errors.New("配置项不存在")
+	}
 	switch value := value.(type){
 	case string:
-		i,_:= strconv.Atoi(value)
-		return i
+		i,err:= strconv.Atoi(value)
+		return i,err
 	case int:
-		return value
+		return value,nil
 	case bool:
 		if value{
-			return 1
+			return 1,nil
 		}
-		return 0
+		return 0,nil
 	case float64:
-		return int(value)
+		return int(value),nil
 	default:
-		return 0
+		return 0,errors.New("未知的配置项数据类型")
 	}
 }
 
 // 从配置文件中获取bool类型的值
-func (c *ConfigEngine) GetBool(name string) bool {
+func (c *ConfigEngine) GetBool(name string) (bool,error) {
 	value := c.Get(name)
+	if value==nil{
+		return false,errors.New("配置项不存在")
+	}
 	switch value := value.(type){
 	case string:
-		str,_:= strconv.ParseBool(value)
-		return str
+		str,err:= strconv.ParseBool(value)
+		return str,err
 	case int:
 		if value != 0 {
-			return true
+			return true,nil
 		}
-		return false
+		return false,nil
 	case bool:
-		return value
+		return value,nil
 	case float64:
 		if value != 0.0 {
-			return true
+			return true,nil
 		}
-		return false
+		return false,nil
 	default:
-		return false
+		return false,errors.New("未知的配置项数据类型")
 	}
 }
 
 // 从配置文件中获取Float64类型的值
-func (c *ConfigEngine) GetFloat64(name string) float64 {
+func (c *ConfigEngine) GetFloat64(name string) (float64,error) {
 	value := c.Get(name)
+	if value==nil{
+		return 0,errors.New("配置项不存在")
+	}
 	switch value := value.(type){
 	case string:
-		str,_ := strconv.ParseFloat(value,64)
-		return str
+		str,err := strconv.ParseFloat(value,64)
+		return str,err
 	case int:
-		return float64(value)
+		return float64(value),nil
 	case bool:
 		if value {
-			return float64(1)
+			return float64(1),nil
 		}
-		return float64(0)
+		return float64(0),nil
 	case float64:
-		return value
+		return value,nil
 	default:
-		return float64(0)
+		return float64(0),errors.New("未知的配置项数据类型")
 	}
 }
 
 // 从配置文件中获取Struct类型的值,这里的struct是你自己定义的根据配置文件
 func (c *ConfigEngine) GetStruct(name string,s interface{}) interface{}{
 	d := c.Get(name)
+	if d==nil{
+		return errors.New("配置项不存在")
+	}
 	switch d.(type){
 	case string:
 		c.setField(s,name,d)
