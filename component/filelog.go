@@ -15,11 +15,11 @@ type LogParams struct {
 	NeedDir	bool `map:"needDir"`
 }
 
-type logFile struct {
+type LogFile struct {
 	filename string
 	fileFd  *os.File
 }
-var Log logFile
+var Log LogFile
 var err error
 var logParams * LogParams
 func init(){
@@ -27,7 +27,7 @@ func init(){
 	container.ComponentCI.RegisterComponent("log", &Log)
 }
 
-func (l *logFile) Init (config interface{}){
+func (l *LogFile) Init (config interface{}){
 	logParams=&LogParams{}
 	if conf, ok := config.(map[interface{}]interface{}); ok {
 		err := utils.MapToStruct(conf, logParams)
@@ -60,7 +60,7 @@ func (l *LogParams)makeFileName(name string) string{
 	return fileName+name+".log"
 }
 
-func (l logFile) logWrite(content string,isExit bool) {
+func (l LogFile) logWrite(content string,isExit bool) {
 	l.fileFd=utils.OpenFile(l.filename)
 	defer l.fileFd.Close()
 	logFile := log.New(l.fileFd, "", log.LstdFlags)
@@ -72,22 +72,22 @@ func (l logFile) logWrite(content string,isExit bool) {
 }
 
 //调试输出
-func (l logFile)OutPut(content ... interface{}){
+func (l LogFile)OutPut(content ... interface{}){
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Println(utils.OutPutString(content...))
 }
 //重新修改日志文件名
-func (l *logFile)SetFileName(name string) *logFile{
+func (l *LogFile)SetFileName(name string) *LogFile {
 	 log:=*l
 	 log.filename=logParams.makeFileName(name)
 	return &log
 }
 //日志记录到文件
-func (l logFile)WriteFile(content...interface{}){
+func (l LogFile)WriteFile(content...interface{}){
 
 	l.logWrite(utils.OutPutString(content...),false)
 }
-func (l logFile)WriteFileExit(content ... interface{}){
+func (l LogFile)WriteFileExit(content ... interface{}){
 	l.logWrite(utils.OutPutString(content...),true)
 }
 
