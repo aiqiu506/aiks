@@ -79,7 +79,6 @@ func (l LogFile)OutPut(content ... interface{}){
 //重新修改日志文件名
 func (l *LogFile)SetFileName(name string) *LogFile {
 	var log LogFile
-	 log=*l
 	 log.filename=logParams.makeFileName(name)
 	return &log
 }
