@@ -1,9 +1,9 @@
 package aiks
 
 import (
-	"aiks/component"
-	"aiks/conf"
-	"aiks/container"
+	"github.com/aiqiu506/aiks/component"
+	"github.com/aiqiu506/aiks/conf"
+	"github.com/aiqiu506/aiks/container"
 	"log"
 )
 
