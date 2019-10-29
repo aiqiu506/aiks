@@ -46,8 +46,6 @@ func (a *App)InitComponent(components ... string)  {
 }
 
 func(a *App)Start(){
-	//初始化服务容器
-	container.InitContainer()
 	//服务执行
 	container.Container.Run()
 }

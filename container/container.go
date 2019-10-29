@@ -12,12 +12,12 @@ type ServiceHandel struct {
 
 
 var Container ServiceHandel
-
-func InitContainer()  {
+func init(){
 	Container= ServiceHandel{
 		Handel:make(map[string]CI),
 	}
 }
+
 func (ser ServiceHandel) Run() {
 	lock := &sync.WaitGroup{}
 	for k, v := range ser.Handel {
