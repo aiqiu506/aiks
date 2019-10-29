@@ -16,7 +16,7 @@ var JsonRpc JsonRpcStruct
 
 func init(){
 	//注册组件
-	container.ComponentCI.RegisterComponent("jpush", &JsonRpc)
+	container.ComponentCI.RegisterComponent("jsonRPC", &JsonRpc)
 }
 
 func (j *JsonRpcStruct )Init(config interface{}){
