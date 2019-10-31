@@ -28,16 +28,16 @@ func (j *JsonRpcStruct )Init(config interface{}){
 	}
 
 }
-func (j * JsonRpcStruct) Request(method string, jsonData interface{}) error {
-	var ret bool
+func (j * JsonRpcStruct) Request(method string, jsonData interface{}) (interface{}, error) {
+	var ret interface{}
 	conn, err := jsonrpc.Dial("tcp", j.Host+":"+j.Port)
 	if err != nil {
-		return err
+		return nil,err
 	}
 	defer conn.Close()
 	err = conn.Call(method, jsonData, &ret)
 	if err != nil {
-		return err
+		return nil,err
 	}
-	return nil
+	return ret,nil
 }
