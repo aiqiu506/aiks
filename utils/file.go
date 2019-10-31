@@ -32,9 +32,6 @@ func OpenFile(fullPath string) *os.File {
 		if err != nil {
 			err=os.Mkdir(dir,0777)
 		}
-		if err != nil {
-			log.Fatal("createFile error2:", err)
-		}
 		fd, err = os.Create(fullPath)
 		if err != nil {
 			log.Fatal("createFile error3:", err)
