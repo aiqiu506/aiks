@@ -8,8 +8,8 @@ import (
 )
 
 type JsonRpcStruct struct {
-	Host string
-	Port string
+	Host string `map:"host"`
+	Port string `map:"port"`
 }
 
 var JsonRpc JsonRpcStruct
