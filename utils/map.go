@@ -7,8 +7,8 @@ import (
 
 func MapToStruct(mmap map[interface{}]interface{},structure interface{}) (err error){
 	defer func() {
-		if errs := recover(); errs!= nil {
-			err = errors.New("调用出错")
+		if errs,ok := recover().(error); ok {
+			err = errs
 		}
 	}()
 	ptp := reflect.TypeOf(structure)
