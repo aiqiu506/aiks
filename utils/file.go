@@ -30,11 +30,15 @@ func OpenFile(fullPath string) *os.File {
 		dir:=filepath.Dir(fullPath)
 		_, err := os.Stat(dir)
 		if err != nil {
-			err=os.Mkdir(dir,0777)
+			pathAll,_:=filepath.Abs(dir)
+			err1:=os.MkdirAll(pathAll,0777)
+			if err1 != nil {
+				log.Fatal("createFile error3:", err1)
+			}
 		}
 		fd, err = os.Create(fullPath)
 		if err != nil {
-			log.Fatal("createFile error3:", err)
+			log.Fatal("createFile error4:", err)
 		}
 	}
 	return fd
