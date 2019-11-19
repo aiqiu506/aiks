@@ -49,5 +49,8 @@ func(a *App)Start(){
 	//服务执行
 	container.Container.Run()
 }
-
+func(a *App)StartOneByOne(){
+	//服务执行
+	container.Container.RunOneByOne()
+}
 
