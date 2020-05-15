@@ -1,10 +1,12 @@
 package conf
 
 import (
+	"aiks/utils"
 	"errors"
 	"fmt"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
+	"log"
 	"reflect"
 	"strconv"
 	"strings"
@@ -162,64 +164,13 @@ func (c *ConfigEngine) GetStruct(name string,s interface{}) interface{}{
 	}
 	switch d.(type){
 	case string:
-		c.setField(s,name,d)
+		return  c.GetString(name)
+
 	case map[interface{}]interface{}:
-		c.mapToStruct(d.(map[interface{}]interface{}), s)
-	}
-	return s
-}
-
-func (c *ConfigEngine) mapToStruct(m map[interface{}]interface{},s interface{}) interface{}{
-	for key, value := range m {
-		switch key.(type) {
-		case string:
-			c.setField(s,key.(string),value)
+		er:=utils.MapToStruct(d.(map[interface{}]interface{}),s)
+		if er!=nil{
+			log.Fatalln(er)
 		}
 	}
 	return s
-}
-
-// 这部分代码是重点，需要多看看
-func (c *ConfigEngine) setField(obj interface{},name string,value interface{}) error {
-	// reflect.Indirect 返回value对应的值
-	structValue := reflect.Indirect(reflect.ValueOf(obj))
-	structFieldValue := structValue.FieldByName(name)
-
-	// isValid 显示的测试一个空指针
-	if !structFieldValue.IsValid() {
-		return fmt.Errorf("No such field: %s in obj",name)
-	}
-
-	// CanSet判断值是否可以被更改
-	if !structFieldValue.CanSet() {
-		return fmt.Errorf("Cannot set %s field value", name)
-	}
-
-	// 获取要更改值的类型
-	structFieldType := structFieldValue.Type()
-	val := reflect.ValueOf(value)
-
-	if structFieldType.Kind() == reflect.Struct && val.Kind() == reflect.Map {
-		vint := val.Interface()
-
-		switch vint.(type) {
-		case map[interface{}]interface{}:
-			for key, value := range vint.(map[interface{}]interface{}) {
-				c.setField(structFieldValue.Addr().Interface(), key.(string), value)
-			}
-		case map[string]interface{}:
-			for key, value := range vint.(map[string]interface{}) {
-				c.setField(structFieldValue.Addr().Interface(), key, value)
-			}
-		}
-
-	} else {
-		if structFieldType != val.Type() {
-			return errors.New("Provided value type didn't match obj field type")
-		}
-
-		structFieldValue.Set(val)
-	}
-
-	return nil
 }
