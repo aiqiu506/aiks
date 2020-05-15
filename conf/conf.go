@@ -1,7 +1,7 @@
 package conf
 
 import (
-	"aiks/utils"
+	"github.com/aiqiu506/aiks/utils"
 	"errors"
 	"fmt"
 	"gopkg.in/yaml.v2"
