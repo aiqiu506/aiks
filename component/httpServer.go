@@ -1,7 +1,7 @@
 package component
 
 import (
-	"aiks/component/AiksHttpServer"
+	"github.com/aiqiu506/aiks/component/AiksHttpServer"
 	"github.com/aiqiu506/aiks/container"
 	"github.com/aiqiu506/aiks/utils"
 	"log"
